@@ -1,0 +1,40 @@
+<div class="col-7">
+        <!-- suka -->
+        <form action="" method="post">
+            <?php 
+            $qt = mysqli_query($conn, "SELECT SUM(suka) FROM tb_like WHERE image_id = '".$_GET('id')"' ");
+            if (mysqli_num_rows($qt) > 0){
+                while($q = mysqli_fetch_array($qt)){
+                    ?>
+                    <button name="suka" class="like">Like <?= $q['SUM(suka)']?></button><br />
+                    <?php 
+                }
+            }else{
+                 ?><p>tidak ada like</p>
+            <?php } 
+            
+            ?>
+        </form>
+        <?php
+        if (isset($_POST['suka'])){
+            include 'db.php';
+            echo "<script>window.location.href='login.php'</script> ";
+        }
+         ?><br />
+         <div class="content">  
+            <form action="" method="post">
+                <input type="hidden" name="adminid" value="<?= $_SESSION['a_global']->admin_id ?>">
+                <textarea class="input-control" type="text" maxlength="300" placeholder="Tulis Komentar Anda disini..." name="komentar" required></textarea>
+                <input type="submit" name="submit" value="kirim" class="btn">
+            </form>
+            <?php 
+            if(isset($_POST['submit'])){
+                echo '<script> alert("login terlebih dahulu")</script>';
+                echo '<script>window.location="login.php"</script>'
+            }
+            ?>
+            <br />
+
+            
+         </div>
+    </div>
